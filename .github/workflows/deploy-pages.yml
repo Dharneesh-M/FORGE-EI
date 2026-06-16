@@ -32,7 +32,11 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
-          cp *.png _site/
+          shopt -s nullglob
+          png_files=( *.png )
+          if [ ${#png_files[@]} -gt 0 ]; then
+            cp "${png_files[@]}" _site/
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
